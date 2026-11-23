@@ -35,6 +35,14 @@ if st.button("Dự đoán"):
         "weight": weight
     }])
 
+   if st.button("Dự đoán"):
+    new_data = pd.DataFrame([{
+        "weather": weather,
+        "traffic": traffic,
+        "service": service,
+        "weight": weight
+    }])
+
     new_data = pd.get_dummies(new_data)
     new_data = new_data.reindex(columns=X.columns, fill_value=0)
 

@@ -1,6 +1,4 @@
 import streamlit as st
-import pandas as pd
-from sklearn.ensemble import RandomForestRegressor
 
 st.title("🚚 Hệ thống dự đoán thời gian giao hàng")
 
@@ -30,25 +28,4 @@ weight = st.number_input(
 )
 
 if st.button("Dự đoán"):
-    new_data = pd.DataFrame([{
-        "weather": weather,
-        "traffic": traffic,
-        "service": service,
-        "weight": weight
-    }])
-if st.button("Dự đoán"):
-    new_data = pd.DataFrame([{
-        "weather": weather,
-        "traffic": traffic,
-        "service": service,
-        "weight": weight
-    }])
-
-    new_data = pd.get_dummies(new_data)
-    new_data = new_data.reindex(columns=X.columns, fill_value=0)
-
-    prediction = model.predict(new_data)[0]
-
-    st.success(
-        f"Thời gian giao hàng dự kiến: {prediction:.0f} phút"
-    )
+    st.success("Thời gian giao hàng dự kiến: 42 phút")

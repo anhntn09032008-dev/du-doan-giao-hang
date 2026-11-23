@@ -34,8 +34,7 @@ if st.button("Dự đoán"):
         "service": service,
         "weight": weight
     }])
-
-   if st.button("Dự đoán"):
+if st.button("Dự đoán"):
     new_data = pd.DataFrame([{
         "weather": weather,
         "traffic": traffic,

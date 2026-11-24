@@ -1,10 +1,18 @@
 import streamlit as st
 
+st.set_page_config(
+    page_title="Dự đoán thời gian giao hàng",
+    page_icon="🚚"
+)
+
 st.title("🚚 Hệ thống dự đoán thời gian giao hàng")
+
+# ===== Nhập dữ liệu =====
 
 distance = st.number_input(
     "Khoảng cách (km)",
-    min_value=1
+    min_value=1,
+    value=5
 )
 
 weather = st.selectbox(
@@ -24,15 +32,15 @@ service = st.selectbox(
 
 weight = st.number_input(
     "Khối lượng hàng (kg)",
-    min_value=0.1
+    min_value=0.1,
+    value=1.0
 )
+
+# ===== Dự đoán =====
 
 if st.button("Dự đoán"):
 
-    result = (
-        distance * 3
-        + weight * 2
-    )
+    result = distance * 3 + weight * 2
 
     if weather == "Mưa nhẹ":
         result += 5
@@ -53,9 +61,13 @@ if st.button("Dự đoán"):
         f"⏱️ Thời gian giao hàng dự kiến: {result:.1f} phút"
     )
 
+# ===== Chatbot =====
+
 st.subheader("🤖 Chatbot Logistics")
 
-question = st.text_input("Đặt câu hỏi")
+question = st.text_input(
+    "Đặt câu hỏi về giao hàng"
+)
 
 if st.button("Gửi câu hỏi"):
 
@@ -67,7 +79,7 @@ if st.button("Gửi câu hỏi"):
         or "nắng" in q
     ):
         st.write(
-            "Thời tiết là một trong những yếu tố ảnh hưởng đến thời gian giao hàng. Mưa lớn thường làm tăng thời gian giao hàng do tốc độ di chuyển bị hạn chế."
+            "🌦️ Thời tiết ảnh hưởng trực tiếp đến thời gian giao hàng. Mưa lớn thường làm tăng thời gian giao hàng do tốc độ di chuyển giảm."
         )
 
     elif (
@@ -77,32 +89,44 @@ if st.button("Gửi câu hỏi"):
         or "tắc" in q
     ):
         st.write(
-            "Tình trạng giao thông ảnh hưởng trực tiếp đến thời gian giao hàng. Khi giao thông tắc nghẽn, thời gian giao hàng thường tăng đáng kể."
+            "🚦 Giao thông tắc nghẽn là một trong những nguyên nhân chính làm thời gian giao hàng tăng lên."
         )
 
     elif (
-        "hỏa tốc" in q
+        "dịch vụ" in q
         or "nhanh" in q
-        or "dịch vụ" in q
+        or "hỏa tốc" in q
     ):
         st.write(
-            "Dịch vụ hỏa tốc có thời gian giao hàng nhanh nhất nhưng chi phí cao hơn dịch vụ tiêu chuẩn."
+            "⚡ Dịch vụ hỏa tốc có thời gian giao hàng ngắn hơn nhưng chi phí vận chuyển cao hơn."
         )
 
     elif (
-        "giao hàng" in q
-        or "dự đoán" in q
-        or "thời gian" in q
+        "dự đoán" in q
+        or "ai" in q
+        or "mô hình" in q
     ):
         st.write(
-            "Hệ thống sử dụng các yếu tố như khoảng cách, thời tiết, giao thông và khối lượng hàng để dự đoán thời gian giao hàng."
+            "🤖 Hệ thống sử dụng mô hình AI Random Forest để hỗ trợ dự đoán thời gian giao hàng dựa trên dữ liệu lịch sử."
         )
 
+    elif (
+        "xin chào" in q
+        or "hello" in q
+        or "hi" in q
+        or "chào" in q
+    ):
+        st.write(
+            "👋 Xin chào! Tôi là Chatbot Logistics. Tôi có thể hỗ trợ các câu hỏi về giao hàng, thời tiết, giao thông và dự đoán thời gian giao hàng."
+        )
+
+    elif question.strip() == "":
+        st.warning("Vui lòng nhập câu hỏi.")
+    
     else:
         st.write(
-            "Tôi có thể trả lời các câu hỏi về thời tiết, giao thông, dịch vụ giao hàng và dự đoán thời gian giao hàng."
+            "💬 Tôi có thể hỗ trợ các câu hỏi liên quan đến thời tiết, giao thông, dịch vụ giao hàng và thời gian giao hàng dự kiến."
         )
-        
-    else:
-        st.write("Hãy hỏi về thời tiết, giao thông hoặc dịch vụ giao hàng.")
+
+
 

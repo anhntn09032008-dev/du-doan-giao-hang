@@ -70,9 +70,8 @@ if st.button("Dự đoán"):
     prediction = model.predict(input_data)
 
     st.success(
-        f"⏱️ Thời gian giao hàng dự kiến: {prediction.1f} phút"
-    )
-
+    f"⏱️ Thời gian giao hàng dự kiến: {prediction.1f} phút"
+)
 st.subheader("🤖 Chatbot Logistics")
 
 question = st.text_input("Đặt câu hỏi")

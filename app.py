@@ -1,13 +1,11 @@
 import streamlit as st
-import joblib
-import pandas as pd
-
-# Load model
-model = joblib.load("delivery_model.pkl")
 
 st.title("🚚 Hệ thống dự đoán thời gian giao hàng")
 
-distance = st.number_input("Khoảng cách (km)", min_value=1)
+distance = st.number_input(
+    "Khoảng cách (km)",
+    min_value=1
+)
 
 weather = st.selectbox(
     "Thời tiết",
@@ -29,49 +27,32 @@ weight = st.number_input(
     min_value=0.1
 )
 
-# Mã hóa giống lúc train
-weather_map = {
-    "Nắng": 0,
-    "Mưa nhẹ": 1,
-    "Mưa lớn": 2
-}
-
-traffic_map = {
-    "Thông thoáng": 0,
-    "Trung bình": 1,
-    "Tắc nghẽn": 2
-}
-
-service_map = {
-    "Tiêu chuẩn": 0,
-    "Nhanh": 1,
-    "Hỏa tốc": 2
-}
-
 if st.button("Dự đoán"):
 
-    input_data = pd.DataFrame(
-        [[
-            distance,
-            weather_map[weather],
-            traffic_map[traffic],
-            service_map[service],
-            weight
-        ]],
-        columns=[
-            "Khoang_Cach_Km",
-            "Thoi_Tiet",
-            "Tinh_Trang_Giao_Thong",
-            "Loai_Dich_Vu",
-            "Khoi_Luong_Hang_kg"
-        ]
+    result = (
+        distance * 3
+        + weight * 2
     )
 
-    prediction = model.predict(input_data)
+    if weather == "Mưa nhẹ":
+        result += 5
+
+    if weather == "Mưa lớn":
+        result += 10
+
+    if traffic == "Trung bình":
+        result += 5
+
+    if traffic == "Tắc nghẽn":
+        result += 10
+
+    if service == "Hỏa tốc":
+        result -= 5
 
     st.success(
-    f"⏱️ Thời gian giao hàng dự kiến: {prediction.1f} phút"
-)
+        f"⏱️ Thời gian giao hàng dự kiến: {result:.1f} phút"
+    )
+
 st.subheader("🤖 Chatbot Logistics")
 
 question = st.text_input("Đặt câu hỏi")
@@ -79,21 +60,14 @@ question = st.text_input("Đặt câu hỏi")
 if st.button("Gửi câu hỏi"):
 
     if "mưa" in question.lower():
-        st.write(
-            "Mưa thường làm tăng thời gian giao hàng do ảnh hưởng đến tốc độ di chuyển."
-        )
+        st.write("Mưa làm tăng thời gian giao hàng.")
 
     elif "tắc" in question.lower():
-        st.write(
-            "Tắc nghẽn giao thông là một trong những nguyên nhân gây giao hàng chậm."
-        )
+        st.write("Tắc nghẽn giao thông làm đơn hàng giao chậm hơn.")
 
     elif "hỏa tốc" in question.lower():
-        st.write(
-            "Dịch vụ hỏa tốc giúp rút ngắn thời gian giao hàng nhưng chi phí cao hơn."
-        )
+        st.write("Hỏa tốc giúp giảm thời gian giao hàng nhưng chi phí cao hơn.")
 
     else:
-        st.write(
-            "Hãy hỏi về thời tiết, giao thông hoặc dịch vụ giao hàng."
-        )
+        st.write("Hãy hỏi về thời tiết, giao thông hoặc dịch vụ giao hàng.")
+

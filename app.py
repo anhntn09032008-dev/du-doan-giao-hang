@@ -59,15 +59,50 @@ question = st.text_input("Đặt câu hỏi")
 
 if st.button("Gửi câu hỏi"):
 
-    if "mưa" in question.lower():
-        st.write("Mưa làm tăng thời gian giao hàng.")
+    q = question.lower()
 
-    elif "tắc" in question.lower():
-        st.write("Tắc nghẽn giao thông làm đơn hàng giao chậm hơn.")
+    if (
+        "thời tiết" in q
+        or "mưa" in q
+        or "nắng" in q
+    ):
+        st.write(
+            "Thời tiết là một trong những yếu tố ảnh hưởng đến thời gian giao hàng. Mưa lớn thường làm tăng thời gian giao hàng do tốc độ di chuyển bị hạn chế."
+        )
 
-    elif "hỏa tốc" in question.lower():
-        st.write("Hỏa tốc giúp giảm thời gian giao hàng nhưng chi phí cao hơn.")
+    elif (
+        "giao thông" in q
+        or "kẹt xe" in q
+        or "tắc đường" in q
+        or "tắc" in q
+    ):
+        st.write(
+            "Tình trạng giao thông ảnh hưởng trực tiếp đến thời gian giao hàng. Khi giao thông tắc nghẽn, thời gian giao hàng thường tăng đáng kể."
+        )
 
+    elif (
+        "hỏa tốc" in q
+        or "nhanh" in q
+        or "dịch vụ" in q
+    ):
+        st.write(
+            "Dịch vụ hỏa tốc có thời gian giao hàng nhanh nhất nhưng chi phí cao hơn dịch vụ tiêu chuẩn."
+        )
+
+    elif (
+        "giao hàng" in q
+        or "dự đoán" in q
+        or "thời gian" in q
+    ):
+        st.write(
+            "Hệ thống sử dụng các yếu tố như khoảng cách, thời tiết, giao thông và khối lượng hàng để dự đoán thời gian giao hàng."
+        )
+
+    else:
+        st.write(
+            "Tôi có thể trả lời các câu hỏi về thời tiết, giao thông, dịch vụ giao hàng và dự đoán thời gian giao hàng."
+        )
+        
     else:
         st.write("Hãy hỏi về thời tiết, giao thông hoặc dịch vụ giao hàng.")
 
